@@ -8,11 +8,11 @@ app.use(express.json());
 var exec = require('child_process').exec,
     child;
 
-const client = new WebTorrent();
 var localpath = "";
 
 app.get("/torrent_file", (request, result) => {
     var magnet = request.body.magnet;
+    const client = new WebTorrent();
     var file = []
     client.add(magnet, function(torrent) {
         localpath = torrent.path;
@@ -25,7 +25,6 @@ app.get("/torrent_file", (request, result) => {
             })
         });
 
-        console.log(torrent.files);
         result.send(file);
 
         torrent.destroy(function() {
@@ -51,13 +50,6 @@ app.get("/torrent_file", (request, result) => {
             }
 
         });
-
-        // var timeout = setTimeout(function() {
-        //     client.destroy(function() {
-        //         console.log("Client Destroyed")
-        //         console.log(localpath)
-        //     })
-        // }, 60000)
     })
 })
 
