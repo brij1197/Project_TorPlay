@@ -2,6 +2,7 @@ import vlc
 import time
 import keyboard
 import app
+from urllib.parse import quote
 
 media=None
 notEndVideoPlayback=1
@@ -11,6 +12,9 @@ def startVideoPlayback(filename):
     global media
     print("Playing....")
     time.sleep(10)
+    print(filename)
+    filename = quote(filename)
+    print("New:{}".format(filename))
     media = vlc.MediaPlayer("http://localhost:8000/0/{}".format(filename)) #D:\\Libraries\\Extra\\Projects\\Netflix\\Marvel Studios Black Widow Official Teaser.mp4)
     media.play()
     while(media.get_position() < media.get_length() and notEndVideoPlayback):
